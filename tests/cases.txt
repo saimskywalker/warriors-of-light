@@ -1,0 +1,53 @@
+# expected|tool|input   (tool: bash = Protect, read = Shell, sql = Silence)
+deny|bash|git merge origin/main
+allow|bash|git merge --abort
+allow|bash|git fetch origin && GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash origin/main && git push --force-with-lease
+allow|bash|git push -u origin feature/login
+deny|bash|git push origin main
+deny|bash|git push origin HEAD:main
+deny|bash|git push -f origin release/2.0
+deny|bash|git push --mirror origin
+deny|bash|git push origin :old-branch
+deny|bash|git push origin v2.3.0
+deny|bash|git push --tags
+deny|bash|git tag v2.3.0
+deny|bash|gh release create v2.3.0
+deny|bash|gh workflow run deploy.yml
+deny|bash|gh api repos/acme/app/pulls/12/merge -X PUT
+deny|bash|gh api -X PATCH repos/acme/app/git/refs/heads/main -f sha=abc
+allow|bash|gh api repos/acme/app/compare/main...abc --jq .behind_by
+deny|bash|gh pr merge 12 --squash --admin
+deny|bash|gh pr merge --squash
+deny|bash|gh pr merge 12 --auto --squash
+deny|bash|gh pr merge 12 --squash
+allow|bash|gh pr view 12 --json mergeable
+allow|bash|gh pr checks 12
+deny|bash|cd app && flutter test
+allow|bash|.claude/wol/spells/slow.sh 'flutter test test/login_test.dart'
+deny|bash|flutter test test/login_test.dart
+deny|bash|flutter analyze lib/main.dart
+deny|bash|npm run build
+allow|bash|echo "remember to run flutter test later"
+allow|bash|grep -rn "flutter test" docs
+deny|bash|firebase deploy --only hosting
+deny|bash|vercel deploy --prod
+deny|bash|fastlane ios release
+deny|bash|eas submit -p ios
+deny|bash|cat android/key.properties
+deny|bash|base64 keys/AuthKey_ABC123.p8
+allow|bash|grep -rn "key.properties" docs
+allow|bash|dart format lib/main.dart
+deny|read|/repo/android/app/upload.jks
+deny|read|/repo/android/key.properties
+deny|read|/repo/.env.production
+allow|read|/repo/lib/main.dart
+allow|read|/repo/docs/key.properties.md
+allow|sql|select count(*) from users where updated_at > now() - interval '1 day'
+allow|sql|with x as (select 1) select * from x
+allow|sql|select 'delete me' as note
+deny|sql|delete from users
+deny|sql|select * from orders for update
+deny|sql|explain analyze select 1
+deny|sql|select pg_sleep(10)
+deny|sql|select 1; drop table users
+deny|sql|set role postgres

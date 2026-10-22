@@ -1,0 +1,8 @@
+wol/heavy.lock/
+wol/slow.log
+wol/allow-local
+wol/crystal/active/
+wol/crystal/*.pid
+wol/verdicts/
+__pycache__/
+.DS_Store
