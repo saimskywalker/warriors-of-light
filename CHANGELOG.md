@@ -1,10 +1,11 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 — 2026-10-22
 
 - `bench/`: four tasks scored by objective checks, run in a plain project
   and with the crew; `bench/run.sh --dry` checks the plumbing for free. Issue
   forms for benchmark results and hero feedback. (#3)
+- An up-to-date Indonesian README, with a language switch at the top of both READMEs. (#21)
 - Installs as a Claude Code plugin: `/plugin install warriors-of-light --marketplace
   saimskywalker/warriors-of-light-ai-agents`. Spells load as plugin hooks; a `wol` command
   (init, slow, gate, libra, awake, rest) is on PATH. Settings and runtime state
