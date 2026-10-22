@@ -129,6 +129,19 @@ SUMMARY: one HIGH: server-side receipt validation is missing
 All patterns live in one file, `.claude/wol/config.sh`, with presets for
 Flutter, web and fullstack.
 
+### What Protect can and cannot see
+
+Protect judges what would really run, not just the first word: it unwraps
+`sh -c` / `bash -c` / `eval`, `$(...)` and backticks, and strips `env`,
+`nice`, `nohup`, `sudo`, `xargs`, `command`, a leading `\` and git's `-C` /
+`-c` options before applying the rules. A command held in a variable
+(`$CMD push …`) cannot be read before it runs, so a line like that is
+refused whenever it could push or merge.
+
+It is a guard rail for an agent, not a sandbox for an attacker: a script
+file that pushes, an alias defined in your shell profile, or a binary on
+your `PATH` is out of its sight. Keep GitHub branch protection on as well.
+
 ## 🔮 The Crystal Gate
 
 `gh pr merge` works only through the gate, and the gate opens only when
