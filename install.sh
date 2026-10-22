@@ -32,8 +32,9 @@ cp "$SRC"/agents/*.md "$C/agents/"
 for d in "$SRC"/skills/*/; do n="$(basename "$d")"; mkdir -p "$C/skills/$n"; cp "$d/SKILL.md" "$C/skills/$n/"; done
 
 # spells, gate, presets; config only if absent
-mkdir -p "$W/spells" "$W/crystal/active" "$W/verdicts" "$W/presets"
+mkdir -p "$W/spells" "$W/crystal" "$W/active" "$W/verdicts" "$W/presets" "$W/bin"
 cp "$SRC"/wol/spells/*.sh "$W/spells/"; cp "$SRC"/wol/crystal/*.sh "$W/crystal/"
+cp "$SRC/wol/lib.sh" "$W/"; cp "$SRC/bin/wol" "$W/bin/wol"
 cp "$SRC"/wol/presets/*.sh "$W/presets/"
 [[ -f "$W/thresholds.md" ]] || cp "$SRC/wol/thresholds.md" "$W/"
 if [[ ! -f "$W/config.sh" ]]; then
@@ -45,7 +46,7 @@ if [[ ! -f "$W/config.sh" ]]; then
   login="$(gh api user --jq .login 2>/dev/null || true)"
   [[ -n "$login" ]] && perl -pi -e "s/^WOL_OWNER=\"\"/WOL_OWNER=\"$login\"/" "$W/config.sh"
 fi
-chmod +x "$W"/spells/*.sh "$W"/crystal/*.sh
+chmod +x "$W"/spells/*.sh "$W"/crystal/*.sh "$W/bin/wol"
 
 # hooks: drop our old entries, add the current ones, keep everything else
 # shellcheck source=/dev/null
@@ -53,7 +54,7 @@ source "$W/config.sh"
 S="$C/settings.local.json"; (( team )) && S="$C/settings.json"
 [[ -f "$S" ]] || echo '{}' >"$S"
 cp "$S" "$S.wol-backup"
-hooks="$(sed "s/__SQL_TOOLS__/${WOL_SQL_TOOLS//\//\\/}/" "$SRC/hooks.json")"
+hooks="$(sed "s/__SQL_TOOLS__/${WOL_SQL_TOOLS//\//\\/}/" "$SRC/wol/install-hooks.json")"
 jq --argjson h "$hooks" '
   def ours: (.hooks // []) | map(.command // "") | any(test("\\.claude/wol/"));
   .hooks = (.hooks // {})
@@ -71,7 +72,7 @@ if (( ! team )); then
   for d in "$SRC"/skills/*/; do add ".claude/skills/$(basename "$d")/"; done
 fi
 # runtime state is never committed, in either mode
-printf 'heavy.lock/\nslow.log\nallow-local\ncrystal/active/\ncrystal/*.pid\nverdicts/\n' >"$W/.gitignore"
+printf 'heavy.lock/\nslow.log\nallow-local\nactive/\nverdicts/\n*.pid\n' >"$W/.gitignore"
 
 echo "✦ The Warriors of Light have answered: $(ls "$SRC"/agents | wc -l | tr -d ' ') heroes, $(ls "$SRC"/skills | wc -l | tr -d ' ') skills, 5 spells."
 echo "  config: $W/config.sh (owner: ${WOL_OWNER:-<set WOL_OWNER>})"

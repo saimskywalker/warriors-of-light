@@ -48,7 +48,8 @@ Reviewers return a VERDICT block, never diffs or logs.
 | UI files | rosa (skill, advisory) |
 | `WOL_GATE_HUMAN`: CI, release, infra | a human merges |
 
-`.claude/wol/crystal/gate.sh <N> --report` prints the same list for a PR.
+`wol gate <N> --report` prints the same list for a PR. (`wol` is on PATH with
+the plugin; after install.sh it is `.claude/wol/bin/wol`.)
 PASS continues, BLOCK is a fix round, NEEDS-HUMAN stops and asks.
 
 ## 2. A parallel job
@@ -127,7 +128,8 @@ A black mage who never wastes a spell. The machine is shared by the session
 and every hero; heavy work runs one at a time.
 
 1. Heavy commands (`WOL_HEAVY`) run only through the queue, never directly:
-   `.claude/wol/spells/slow.sh 'flutter test test/a_test.dart test/b_test.dart'`.
+   `wol slow 'flutter test test/a_test.dart test/b_test.dart'` (after install.sh:
+   `.claude/wol/bin/wol slow '...'`).
    The Protect spell denies them otherwise.
 2. Narrowest command that proves the change: the touched test files, the
    touched files' analysis. Never the full suite locally; that is CI's job.
@@ -135,7 +137,7 @@ and every hero; heavy work runs one at a time.
    creating `.claude/wol/allow-local`; never create it yourself.
 4. Parallel heroes are fine; parallel heavy runs are not.
 5. Quote globs; prefer the tool's own timeout parameter.
-6. `.claude/wol/spells/libra.sh` shows the queue holder, heavy processes,
+6. `wol libra` shows the queue holder, heavy processes,
    free memory and recent runs. A stale lock is reclaimed automatically.
 """)
 
@@ -210,8 +212,7 @@ tonight only.
 2. Merge method: the owner's word, else `WOL_MERGE_METHOD`.
 3. Not in auto mode? Say "switch to auto mode before sleeping" and list
    what will run.
-4. `.claude/wol/crystal/awake.sh start`; for each PR
-   `date +%F > .claude/wol/crystal/active/<N>`.
+4. `wol awake start`; for each PR `date +%F > .claude/wol/active/<N>`.
 
 ## The run
 1. Finish only the agreed work. Commits per ignis, push the feature branch.
@@ -220,7 +221,7 @@ tonight only.
    rounds, then stop that PR.
 3. Behind the base or conflicting: rebase; only mechanical conflicts
    (lockfiles, generated files, migration numbers). Otherwise abort, stop.
-4. Reviews on the FINAL head: `gate.sh <N> --report` names them. Write each
+4. Reviews on the FINAL head: `wol gate <N> --report` names them. Write each
    reviewer's block to `.claude/wol/verdicts/<N>-<agent>.txt` plus a line
    `SHA: <head>`. Copy the VERDICT line verbatim; never write PASS yourself.
 5. `gh pr merge <N> --<method>` and nothing else. The Crystal Gate refuses
@@ -230,7 +231,7 @@ tonight only.
 
 ## Rest
 yuna writes the handoff (merged, or stopped and why), stop the background
-waiters, then `.claude/wol/crystal/rest.sh` (dev stack down; powers off only
+waiters, then `wol rest` (dev stack down; powers off only
 if `WOL_SHUTDOWN=1`).
 """)
 

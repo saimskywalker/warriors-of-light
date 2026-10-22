@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Installs as a Claude Code plugin: `/plugin install warriors-of-light --marketplace
+  saimskywalker/warriors-of-light-ai-agents`. Spells load as plugin hooks; a `wol` command
+  (init, slow, gate, libra, awake, rest) is on PATH. Settings and runtime state
+  stay in the project's `.claude/wol/`, and a project `config.sh` overrides the
+  defaults instead of replacing them. `install.sh` keeps working. (#1)
 - Protect judges wrapped commands: `sh -c`, `bash -c`, `eval`, `$(...)`,
   backticks, `env` / `nice` / `nohup` / `sudo` / `xargs` / `command`
   prefixes, a leading backslash and git `-C` / `-c`. A command held in a
