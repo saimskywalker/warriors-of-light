@@ -1,157 +1,214 @@
+<div align="center">
+
 # ✦ Warriors of Light ✦
+
+**AI agent untuk Claude Code, khusus app Flutter, mobile, dan web.**
+16 hero. 14 skill. 5 spell yang tidak makan token. Satu gerbang yang tidak bisa diterobos merge sembarangan.
 
 [English](README.md) · **Bahasa Indonesia**
 
-**Kru Claude Code untuk aplikasi Flutter, mobile, dan web.** 16 pahlawan. 14 skill. 5 mantra yang tidak memakan token sama sekali. Satu gerbang yang tidak bisa dilewati merge mana pun.
+[![ci](https://github.com/saimskywalker/warriors-of-light-ai-agents/actions/workflows/ci.yml/badge.svg)](https://github.com/saimskywalker/warriors-of-light-ai-agents/actions/workflows/ci.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/built%20for-Claude%20Code-d97757)](https://docs.anthropic.com/en/docs/claude-code)
 
-[![ci](https://github.com/saimskywalker/warriors-of-light/actions/workflows/ci.yml/badge.svg)](https://github.com/saimskywalker/warriors-of-light/actions/workflows/ci.yml) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![Claude Code](https://img.shields.io/badge/built%20for-Claude%20Code-d97757)](https://docs.anthropic.com/en/docs/claude-code)
+> 「光の戦士たちよ、クリスタルが汝らを選んだ。集え——このコードに調和を取り戻すために。」
+> *"Para Warriors of Light, kristal telah memilih kalian. Berkumpullah, dan kembalikan keteraturan ke kode ini."*
 
-> 「光の戦士たちよ、クリスタルが汝らを選んだ。集え——このコードに調和を取り戻すために。」 *"Wahai Prajurit Cahaya, kristal telah memilih kalian. Berkumpullah, dan pulihkan harmoni dalam kode ini."*
+</div>
 
 ---
 
-Kamu adalah **Cosmos**. Kamu memanggil para pahlawan, dan mereka bertarung demi codebase-mu: satu merancang dari Figma, satu membangun layar, satu membayangkan semua cara layar itu bisa rusak, satu mereview kode pembayaranmu seperti seorang penyerang, satu membaca laporan crash-mu saat fajar. Di antara mereka berdiri **mantra (spells)**: hook shell biasa yang memblokir kesalahan yang biasa dibuat agen AI pukul 2 pagi (push ke `main`, menjalankan seluruh test suite di laptop, `cat` pada kunci penandatanganan) sebelum kesalahan itu terjadi, tanpa menghabiskan satu token pun.
+Kamu adalah **Cosmos**, yang memanggil para hero. Mereka bekerja untuk
+codebase-mu: ada yang membaca desain Figma, ada yang membangun layarnya, ada
+yang mencari semua cara layar itu bisa rusak, ada yang mereview kode
+pembayaran seperti penyerang, ada yang membaca laporan crash tiap pagi.
 
-## Mengapa
+Di antara mereka ada **spell**: hook shell biasa yang mencegah kesalahan
+khas AI agent jam dua pagi. Contohnya push ke `main`, menjalankan semua test
+sekaligus di laptop, atau membuka file signing key. Semuanya dicegah
+sebelum terjadi, tanpa memakai token sedikit pun.
 
-Agen coding AI itu cepat, dan itulah masalahnya. Kalau dibiarkan sendiri, mereka:
+## Kenapa perlu?
 
-- **menulis kode terlalu banyak** (library untuk date picker, helper yang sebenarnya sudah ada);
-- **menghabiskan token-mu** dengan memanggil helper untuk perubahan satu baris;
-- **membuat laptopmu kepanasan** dengan `flutter test` dan build Gradle yang berjalan paralel;
-- **melakukan merge dan push** yang seharusnya tidak mereka lakukan;
-- **melupakan aturan** yang kamu tulis di prompt tiga jam lalu.
+AI agent itu cepat, dan justru di situ masalahnya. Kalau dilepas begitu saja, mereka:
 
-Warriors of Light menjawab tiap masalah itu dengan sesuatu yang tidak bisa lupa:
+- **menulis kode kebanyakan**: pasang library hanya untuk date picker, atau bikin helper yang sebenarnya sudah ada;
+- **boros token**: memanggil sub-agent untuk perubahan satu baris;
+- **bikin laptop hang**: `flutter test` dan build Gradle jalan barengan;
+- **merge dan push yang tidak seharusnya**;
+- **lupa aturan** yang kamu tulis di prompt tiga jam sebelumnya.
 
-| Masalah               | Jawaban                                                                                                                                                                  |
-|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Kode terlalu banyak   | tangga kemalasan **Auron** (pakai ulang → stdlib → platform → minimal), dan mantra **Mini**: batas lunak 300, batas keras 500 baris per file                              |
-| Boros token           | **Cosmos** bekerja sendiri dulu; pahlawan hanya untuk kerja paralel, pembacaan luas, atau review. Haiku mengumpulkan, Sonnet membangun, Opus menilai                      |
-| Laptop membeku        | mantra **Slow**: satu pekerjaan berat dalam satu waktu, prioritas rendah, menunggu saat memori menipis, dibatasi waktu                                                    |
-| Merge berbahaya       | mantra **Protect** menutup setiap jalan menuju branch yang dilindungi; **Crystal Gate** hanya melakukan merge jika CI hijau, tidak ada konflik, dan para reviewer bilang PASS |
-| Aturan yang terlupakan | hook, bukan prompt: berjalan pada setiap pemanggilan tool, untuk setiap agen, setiap saat                                                                                |
+Warriors of Light menjawab masing-masing dengan aturan yang tidak bisa lupa:
 
-## Panggil mereka dalam 60 detik
+| Masalah | Solusinya |
+|---|---|
+| Kode kebanyakan | Urutan "malas" **Auron** (pakai yang sudah ada → standard library → fitur platform → kode seminimal mungkin), plus spell **Mini**: peringatan di 300 baris, diblokir di 500 baris per file |
+| Boros token | **Cosmos** mengerjakan sendiri dulu. Hero baru dipanggil untuk kerja paralel, baca banyak file, atau review. Haiku mengumpulkan, Sonnet membangun, Opus menilai risiko |
+| Laptop hang | Spell **Slow**: kerja berat jalan satu per satu, prioritas rendah, menunggu kalau RAM menipis, ada batas waktunya |
+| Merge berbahaya | Spell **Protect** menutup semua jalan ke branch yang dilindungi. **Crystal Gate** hanya mau merge kalau CI hijau, tidak ada konflik, dan reviewer bilang PASS |
+| Aturan terlupa | Pakai hook, bukan prompt: jalan di setiap tool call, untuk setiap agent, setiap saat |
+
+## Pasang dalam semenit
+
+**Sebagai plugin Claude Code** (disarankan). Ketik ini di dalam Claude Code:
 
 ```
-git clone https://github.com/saimskywalker/warriors-of-light.git
-cd warriors-of-light
-./install.sh --preset flutter ~/code/my-app      # or: web | fullstack
+/plugin install warriors-of-light --marketplace saimskywalker/warriors-of-light-ai-agents
 ```
 
-Buka sesi Claude Code **baru** di aplikasimu dan ucapkan:
+Kalau Claude Code-mu versi lama, tambahkan marketplace-nya dulu:
+`/plugin marketplace add saimskywalker/warriors-of-light-ai-agents`, lalu
+`/plugin install warriors-of-light@warriors-of-light`.
+
+Setelah itu, di folder app-mu, buat setelan project sekali saja (pilih preset):
+
+```bash
+wol init flutter      # atau: web | fullstack
+```
+
+Lalu panggil mereka:
 
 ```
 Warriors of Light, assemble!
 ```
 
-Bersifat pribadi secara default: semuanya masuk ke `.claude/` dan disembunyikan dari git lewat `.git/info/exclude`. Tambahkan `--team` untuk meng-commit kru ini bagi semua orang. Hapus kapan saja dengan `./uninstall.sh ~/code/my-app`.
+Agent dan skill dari plugin punya awalan namanya sendiri (`warriors-of-light:noctis`),
+jadi tidak bentrok dengan agent milikmu. Setelan dan file sementara disimpan
+di `.claude/wol/` project-mu. Commit `config.sh` kalau ingin setelannya
+dipakai bareng tim.
 
-Membutuhkan `jq`, `git`, `perl`, dan `gh` untuk merge gate. macOS atau Linux.
+**Tanpa plugin** (dipasang ke satu project lewat script):
 
-## ⚔️ Para pahlawan (subagent)
+```bash
+git clone https://github.com/saimskywalker/warriors-of-light-ai-agents.git
+./warriors-of-light-ai-agents/install.sh --preset flutter ~/code/my-app   # tambah --team untuk di-commit bareng tim
+```
 
-| Pahlawan             | Dari | Peran                                                                                         | Model  | Akses       |
-|----------------------|------|-----------------------------------------------------------------------------------------------|--------|-------------|
-| **Bartz**            | V    | Membaca design system dan Figma-mu, menulis spesifikasi yang diikuti para builder             | sonnet | baca        |
-| **Zidane**           | IX   | Membangun UI: widget Flutter atau komponen web, setiap state, setiap ukuran layar             | sonnet | ubah        |
-| **Cloud**            | VII  | Membangun backend: API, function, migrasi, dashboard                                          | sonnet | ubah        |
-| **Tidus**            | X    | Membayangkan skenario happy / edge / worst / abuse dan menulis tes yang belum ada             | sonnet | ubah tes    |
-| **Squall**           | VIII | Review bug dan crash secara adversarial pada sebuah diff                                      | opus   | baca        |
-| **Warrior of Light** | I    | Menafsirkan keluaran analyzer, type-checker, dan linter; menemukan apa yang terlewat          | sonnet | baca        |
-| **Lightning**        | XIII | Membaca CI yang gagal, memisahkan kegagalan nyata dari flake dan noise runner                 | haiku  | baca        |
-| **Clive**            | XVI  | Menyembuhkan tes yang gagal dengan cara jujur: tidak pernah men-skip, tidak pernah melonggarkan | sonnet | ubah        |
-| **Cecil**            | IV   | Kode mati, dan file mana yang layak di-refactor (churn × bug × kompleksitas)                  | opus   | baca        |
-| **Vaan**             | XII  | Menemukan setiap issue dan PR yang masih menunggu balasan seseorang                           | haiku  | baca        |
-| **Terra**            | VI   | Teks di setiap bahasa, aturan listing toko dan permission prompt                              | sonnet | baca        |
-| **Noctis**           | XV   | Keamanan auth, sesi, pembayaran, IAP, dan webhook, per PR                                     | opus   | baca        |
-| **Firion**           | II   | Sapuan keamanan seluruh sistem: MASVS, OWASP Top 10, kebocoran, aturan Firebase/Supabase      | opus   | baca        |
-| **Y'shtola**         | XIV  | Triase Crashlytics / Sentry: crash baru per versi, dipetakan ke file:baris                    | sonnet | baca        |
-| **Shantotto**        | XI   | Jawaban database read-only (hanya agregat) dan review migrasi                                 | sonnet | baca        |
-| **Luneth**           | III  | Performa dan analitik: app start, ANR, Web Vitals, funnel terhadap ambang batasmu             | sonnet | baca        |
+Defaultnya pribadi: semua file masuk ke `.claude/` dan disembunyikan dari git
+lewat `.git/info/exclude`. Hapus kapan saja dengan `./uninstall.sh ~/code/my-app`.
 
-Setiap reviewer mengakhiri laporannya dengan blok yang sama, sehingga keputusan bisa diambil secara mekanis:
+Butuh `jq`, `git`, `perl`, dan `gh` untuk merge gate. Jalan di macOS dan Linux.
+
+### Perintah `wol`
+
+| Perintah | Fungsinya |
+|---|---|
+| `wol init <preset>` | membuat `.claude/wol/config.sh` untuk project ini |
+| `wol slow '<perintah>'` | menjalankan perintah berat lewat antrian |
+| `wol gate <pr> --report` | menampilkan semua syarat Crystal Gate untuk satu PR |
+| `wol libra` | siapa yang pegang antrian, proses berat, RAM bebas, riwayat terakhir |
+| `wol awake start` / `wol rest` | dipakai Laguna: jaga laptop tetap menyala, lalu beres-beres di akhir |
+
+Kalau pakai plugin, `wol` langsung ada di PATH. Kalau lewat `install.sh`,
+perintahnya ada di `.claude/wol/bin/wol`.
+
+## ⚔️ Para hero (sub-agent)
+
+| Hero | Dari | Tugas | Model | Akses |
+|---|---|---|---|---|
+| **Bartz** | V | Membaca design system dan Figma, menulis spec untuk builder | sonnet | baca |
+| **Zidane** | IX | Membangun UI: widget Flutter atau komponen web, semua state, semua ukuran layar | sonnet | edit |
+| **Cloud** | VII | Membangun backend: API, function, migration, dashboard | sonnet | edit |
+| **Tidus** | X | Memikirkan skenario normal / tepi / terburuk / penyalahgunaan, lalu menulis test yang kurang | sonnet | edit test |
+| **Squall** | VIII | Mereview diff untuk mencari bug dan crash | opus | baca |
+| **Warrior of Light** | I | Membaca output analyzer, type checker, dan linter, lalu mencari yang mereka lewatkan | sonnet | baca |
+| **Lightning** | XIII | Membaca CI yang gagal, memisahkan kegagalan asli dari yang cuma flaky | haiku | baca |
+| **Clive** | XVI | Membetulkan test yang gagal dengan jujur: tidak di-skip, tidak dilonggarkan | sonnet | edit |
+| **Cecil** | IV | Mencari dead code, dan file mana yang layak di-refactor (churn × bug × kompleksitas) | opus | baca |
+| **Vaan** | XII | Mencari issue dan PR yang masih menunggu balasan seseorang | haiku | baca |
+| **Terra** | VI | Teks di semua bahasa, aturan listing store dan teks izin aplikasi | sonnet | baca |
+| **Noctis** | XV | Keamanan login, sesi, pembayaran, IAP, dan webhook, per PR | opus | baca |
+| **Firion** | II | Audit keamanan menyeluruh: MASVS, OWASP Top 10, kebocoran data, rules Firebase/Supabase | opus | baca |
+| **Y'shtola** | XIV | Membaca Crashlytics / Sentry: crash baru per versi, dipetakan ke file:baris | sonnet | baca |
+| **Shantotto** | XI | Menjawab pertanyaan dari database secara read-only (agregat saja) dan mereview migration | sonnet | baca |
+| **Luneth** | III | Performa dan analytics: waktu buka app, ANR, Web Vitals, funnel dibanding threshold-mu | sonnet | baca |
+
+Setiap reviewer menutup jawabannya dengan blok yang sama, jadi keputusan bisa diambil secara otomatis:
 
 ```
 VERDICT: PASS | BLOCK | NEEDS-HUMAN
 AGENT: noctis
 FINDINGS:
-- [HIGH] lib/purchase/verify.dart:42 — receipt trusted from the client, never checked with the store
-SUMMARY: one HIGH: server-side receipt validation is missing
+- [HIGH] lib/purchase/verify.dart:42 — receipt dipercaya dari client, tidak pernah dicek ke store
+SUMMARY: satu temuan HIGH: validasi receipt di server belum ada
 ```
 
-## ✨ Para skill
+## ✨ Skill
 
-| Skill         | Dimuat saat                                                                                                |
-|---------------|------------------------------------------------------------------------------------------------------------|
-| **Cosmos**    | pemanggilan, sebelum delegasi apa pun, memilih reviewer mana yang dibutuhkan sebuah diff                    |
-| **Auron**     | sebelum menulis kode apa pun: tangga kemalasan, daftar yang tidak boleh dipangkas, batas ukuran, cepat secara default |
-| **Lulu**      | sebelum menjalankan build dan tes: antrean Slow, tidak ada full suite di lokal                              |
-| **Ignis**     | commit, rebase, isi PR: satu PR per fitur, tanpa atribusi AI, tidak pernah merge                            |
-| **Rikku**     | CI sedang merah                                                                                             |
-| **Relm**      | Figma → Flutter / web, dengan anggaran panggilan dan jebakan konversi                                       |
-| **Rosa**      | setiap perubahan UI: aksesibilitas (semantics, kontras, skala teks, fokus, ukuran target sentuh)            |
-| **Ashe**      | sebelum submit ke toko: checklist review App Store dan Google Play                                          |
-| **Cid**       | rilis: semuanya disiapkan, lalu BERHENTI menunggumu                                                         |
-| **Aerith**    | health check pagi: crash, performa, dan data dalam satu ringkasan                                           |
-| **Laguna**    | pekerjaan tengah malam: selesaikan, tunggu CI hijau, merge lewat gate, istirahat                            |
-| **Yuna**      | serah terima sebelum kamu mengosongkan konteks                                                              |
-| **Steiner**   | kebocoran atau pembobolan: isolasi, rotasi, cabut, verifikasi, catat                                        |
-| **Lunafreya** | "apa yang menunggu siapa": draf rekap atau standup, tidak pernah dikirim untukmu                            |
+| Skill | Aktif saat |
+|---|---|
+| **Cosmos** | summon, sebelum mendelegasikan kerja, memilih reviewer yang dibutuhkan sebuah diff |
+| **Auron** | sebelum menulis kode apa pun: urutan "malas", daftar yang tidak boleh dipangkas, batas ukuran file, cepat sejak awal |
+| **Lulu** | sebelum menjalankan build dan test: antrian Slow, tidak ada full suite di laptop |
+| **Ignis** | commit, rebase, isi PR: satu PR per fitur, tanpa atribusi AI, tidak pernah merge sendiri |
+| **Rikku** | CI merah |
+| **Relm** | Figma → Flutter / web, dengan batas jumlah panggilan dan jebakan konversinya |
+| **Rosa** | setiap perubahan UI: aksesibilitas (label, kontras, ukuran teks, fokus, area sentuh) |
+| **Ashe** | sebelum submit ke store: checklist review App Store dan Google Play |
+| **Cid** | rilis: semua disiapkan, lalu BERHENTI menunggu keputusanmu |
+| **Aerith** | health check pagi: crash, performa, dan data dalam satu ringkasan |
+| **Laguna** | kerja tengah malam: selesaikan, tunggu CI hijau, merge lewat gerbang, lalu istirahat |
+| **Yuna** | handoff sebelum kamu clear context |
+| **Steiner** | ada kebocoran atau pembobolan: bendung, ganti kunci, cabut akses, cek, catat |
+| **Lunafreya** | "apa yang masih menunggu siapa": draft rekap atau standup, tidak pernah dikirim otomatis |
 
-## 🛡️ Para mantra (hook, nol token)
+## 🛡️ Spell (hook, tanpa token)
 
-| Mantra      | Mengawasi                  | Menghentikan                                                                                                                                                                                                                         |
-|-------------|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Protect** | setiap perintah shell      | merge lokal; push ke `main` / `release/*`; push force, mirror, dan delete; merge lewat `gh api`; `--admin`; tag produksi; `firebase deploy`, `vercel --prod`, `fastlane release`, `eas submit`…; `cat` pada keystore                  |
-| **Shell**   | setiap pembacaan dan edit file | kunci penandatanganan, service account, file env produksi                                                                                                                                                                        |
-| **Silence** | tool SQL MCP-mu            | apa pun selain SELECT / WITH / EXPLAIN / SHOW; lock; sleep; multi-statement                                                                                                                                                          |
-| **Mini**    | setiap edit                | file yang membengkak melewati 300 baris (catatan) atau 500 baris (blokir)                                                                                                                                                            |
-| **Slow**    | perintah berat             | eksekusi berat yang paralel; memori rendah; job yang lepas kendali                                                                                                                                                                   |
+| Spell | Mengawasi | Mencegah |
+|---|---|---|
+| **Protect** | setiap perintah shell | merge lokal; push ke `main` / `release/*`; push force, mirror, atau hapus branch; merge lewat `gh api`; `--admin`; tag produksi; `firebase deploy`, `vercel --prod`, `fastlane release`, `eas submit`; membuka file keystore |
+| **Shell** | setiap file yang dibaca dan diedit | signing key, service account, file env produksi |
+| **Silence** | tool SQL lewat MCP | apa pun selain SELECT / WITH / EXPLAIN / SHOW; lock; sleep; banyak statement sekaligus |
+| **Mini** | setiap edit | file yang membesar lewat 300 baris (peringatan) atau 500 baris (diblokir) |
+| **Slow** | perintah berat | kerja berat yang jalan barengan; RAM menipis; proses yang tidak berhenti |
 
-Semua pola ada di satu file, `.claude/wol/config.sh`, lengkap dengan preset untuk Flutter, web, dan fullstack.
+Semua polanya ada di satu file, `.claude/wol/config.sh`, dengan preset untuk Flutter, web, dan fullstack.
+
+### Apa yang bisa dan tidak bisa dilihat Protect
+
+Protect menilai perintah yang benar-benar akan dijalankan, bukan hanya kata
+pertamanya. Ia membuka `sh -c` / `bash -c` / `eval`, `$(...)` dan backtick,
+serta membuang awalan `env`, `nice`, `nohup`, `sudo`, `xargs`, `command`,
+garis miring terbalik di depan, dan opsi git `-C` / `-c`. Perintah yang
+disimpan di variabel (`$CMD push …`) tidak bisa dibaca sebelum dijalankan,
+jadi baris seperti itu ditolak kalau bisa melakukan push atau merge.
+
+Ini pagar pengaman untuk agent, bukan sandbox untuk menahan penyerang. Script
+terpisah yang melakukan push, alias di profil shell-mu, atau program di
+`PATH`-mu ada di luar jangkauannya. Tetap aktifkan branch protection di GitHub.
 
 ## 🔮 Crystal Gate
 
-`gh pr merge` hanya berfungsi lewat gate, dan gate hanya terbuka bila **semua** syarat berikut terpenuhi, dibaca langsung dari GitHub pada saat merge:
+`gh pr merge` hanya bisa lewat gerbang ini, dan gerbangnya baru terbuka kalau
+**semua** syarat berikut terpenuhi, dicek langsung ke GitHub saat merge:
 
-- Laguna dipanggil untuk PR ini **malam ini**, dan itu PR milikmu;
+- Laguna dipanggil untuk PR ini **malam ini**, dan PR-nya milikmu;
 - bukan draft, tidak ada label `needs-human`;
-- **MERGEABLE tanpa konflik**, merge state `CLEAN`, up to date dengan base;
-- **semua check hijau** pada head commit;
-- tidak ada review thread yang belum diselesaikan;
-- tidak ada file CI, rilis, atau infra (itu di-merge oleh manusia);
-- verdict `PASS` untuk commit yang persis ini dari setiap reviewer yang dibutuhkan diff.
+- **bisa di-merge tanpa konflik**, status merge `CLEAN`, sudah up to date dengan base;
+- **semua check hijau** di commit terakhir;
+- tidak ada thread review yang belum selesai;
+- tidak menyentuh file CI, rilis, atau infrastruktur (yang seperti itu di-merge manusia);
+- ada verdict `PASS` untuk commit ini dari setiap reviewer yang dibutuhkan diff-nya.
 
-```
-.claude/wol/crystal/gate.sh 12 --report
+```bash
+wol gate 12 --report
 ✓ author is the owner
 ✓ mergeable, no conflict
 ✗ checks not green: test=IN_PROGRESS
 ✗ noctis verdict PASS for head 3c673ac2b missing
 ```
 
-## 🗺️ Pipeline
+## 🗺️ Alur kerja
 
-```mermaid
-flowchart LR
-  B[Bartz<br/>spec] --> Z[Zidane<br/>UI] & C[Cloud<br/>API]
-  Z & C --> T[Tidus<br/>tests]
-  T --> W[Warrior of Light<br/>static] & S[Squall<br/>bugs] & N[Noctis<br/>security]
-  W & S & N --> CL[Clive<br/>heal]
-  CL --> G{{Crystal Gate}}
-```
-
-- **Fitur baru**: Bartz → Zidane ∥ Cloud → Tidus → Warrior of Light ∥ Squall ∥ gate → Clive → Ignis
-- **Crash di produksi**: Y'shtola → Squall → Tidus (tes reproduksi dulu) → perbaikan → Clive
+- **Fitur baru**: Bartz → Zidane ∥ Cloud → Tidus → Warrior of Light ∥ Squall ∥ gerbang → Clive → Ignis
+- **Crash di produksi**: Y'shtola → Squall → Tidus (test reproduksi dulu) → perbaikan → Clive
 - **CI merah**: Lightning → Warrior of Light / Clive
-- **Refactor**: Cecil → Tidus (kunci perilaku dulu) → Zidane / Cloud → review
-- **Rilis**: Cid → gate → **berhenti menunggumu** → 24 jam kemudian Y'shtola + Luneth terhadap ambang batasmu
+- **Refactor**: Cecil → Tidus (kunci perilakunya dulu) → Zidane / Cloud → review
+- **Rilis**: Cid → gerbang → **berhenti menunggumu** → 24 jam kemudian Y'shtola + Luneth dibanding threshold-mu
 - **Pagi**: Aerith → Y'shtola ∥ Luneth ∥ Shantotto → satu ringkasan
 - **Tengah malam**: Laguna → selesaikan → CI → verdict → Crystal Gate → Yuna → istirahat
 
-## 💬 Ucapkan seperti ini
+## 💬 Cara memanggil
 
 ```
 Cosmos, send Noctis to review PR #12
@@ -162,30 +219,69 @@ Aerith, run the health check
 Laguna, finish PR #12 and rest
 ```
 
-## Aturan kode (Auron)
+Perintahnya boleh juga ditulis dalam bahasa Indonesia, misalnya *"Cosmos, minta Noctis review PR #12"*.
 
-1. **Baca dulu**, lalu berhenti di anak tangga pertama yang berlaku: apakah ini perlu ada → sudah ada di codebase → pustaka standar → fitur platform → dependency yang sudah terpasang → satu baris → baru kemudian yang minimal, ditambah satu tes kecil bila ada logika.
-2. **Jangan pernah dipangkas**: validasi di batas kepercayaan, penanganan kehilangan data, keamanan, aksesibilitas, error yang bisa ditindaklanjuti, uang yang idempoten.
-3. **Batas lunak 300 / keras 500 baris** per file yang ditulis tangan, ditegakkan oleh Mini.
-4. **Tulis dengan benar sekali saja**: ikuti kode di sekitarnya, `switch` daripada tangga if, satu tipe state sealed daripada boolean, ekstrak pada pemakaian ketiga.
-5. **Cepat secara default**: tanpa N+1, satu polling per layar, widget `const` dan `select` pada provider, tanpa layout shift, indeks dan paginasi, optimasi hanya yang terukur.
+## Aturan menulis kode (Auron)
+
+1. **Baca dulu**, lalu berhenti di langkah pertama yang cukup: apakah ini perlu
+   ada → sudah ada di codebase → ada di standard library → ada fitur platformnya →
+   ada dependency yang sudah terpasang → bisa satu baris → baru tulis yang
+   minimum, plus satu test kecil kalau ada logikanya.
+2. **Tidak pernah dipangkas**: validasi di batas kepercayaan, penanganan
+   kehilangan data, keamanan, aksesibilitas, pesan error yang bisa ditindaklanjuti,
+   transaksi uang yang tidak tercatat dua kali.
+3. **300 / 500 baris** per file yang ditulis manusia, dijaga oleh Mini.
+4. **Benar sekali jalan**: ikuti gaya kode di sekitarnya, `switch` daripada
+   rantai if, satu tipe state (sealed) daripada banyak boolean, ekstrak baru
+   di pemakaian ketiga.
+5. **Cepat sejak awal**: tanpa N+1, satu polling per layar, widget `const` dan
+   `select` di provider, tanpa layout bergeser, index dan pagination,
+   optimasi hanya kalau ada angka pengukurannya.
+
+## 📊 Benchmark: coba sendiri, kabari kami
+
+Empat tugas, dijalankan di project biasa dan di project yang sudah memasang
+crew, dinilai otomatis (test lulus, bug yang ditanam disebut, `main` tidak
+bergerak, file lain tidak berubah):
+
+```bash
+bench/run.sh --dry            # gratis: cek alurnya saja
+bench/run.sh --runs 3         # sesi sungguhan; laporannya mencantumkan biaya
+```
+
+Lalu [bagikan tabel hasilnya](https://github.com/saimskywalker/warriors-of-light-ai-agents/issues/new?template=benchmark.yml)
+atau [ceritakan hero yang keliru](https://github.com/saimskywalker/warriors-of-light-ai-agents/issues/new?template=feedback.yml).
+Kami tidak memasang angka apa pun sebelum ada hasil dari orang-orang seperti kamu.
+Detailnya: [bench/README.md](bench/README.md).
 
 ## FAQ
 
-**Apakah ini jalan tanpa Figma, Crashlytics, atau database?** Ya. Pahlawan yang membutuhkan sumber yang belum kamu hubungkan akan memberi tahu dan berhenti; semua yang lain tetap bekerja.
+**Bisa jalan tanpa Figma, Crashlytics, atau database?** Bisa. Hero yang butuh
+sumber data yang belum kamu sambungkan akan bilang begitu lalu berhenti. Sisanya tetap jalan.
 
-**Apakah ini memperlambat Claude?** Para mantra adalah skrip shell kecil yang berjalan dalam hitungan milidetik. Penghematannya datang dari Cosmos yang mengerjakan sendiri pekerjaan kecil alih-alih memanggil agen.
+**Apakah bikin Claude jadi lambat?** Spell-nya cuma script shell kecil yang
+selesai dalam hitungan milidetik. Penghematannya justru datang dari Cosmos
+yang mengerjakan tugas kecil sendiri tanpa memanggil agent.
 
-**Bisakah saya mengubah batasnya?** Semuanya ada di `.claude/wol/config.sh`: branch yang dilindungi, perintah berat, perintah deploy, file rahasia, batas ukuran, aturan path untuk gate.
+**Batasnya bisa diubah?** Semua ada di `.claude/wol/config.sh`: branch yang
+dilindungi, perintah berat, perintah deploy, file rahasia, batas ukuran, dan aturan path untuk gerbang.
 
-**Apakah merge gate menggantikan branch protection?** Ini adalah tembok lokal untuk agenmu. Gunakan juga branch protection GitHub jika paketmu mendukungnya.
+**Apakah merge gate menggantikan branch protection?** Tidak. Gerbang ini pagar
+lokal untuk agent-mu. Kalau paket GitHub-mu mendukung, tetap pasang branch protection.
 
-## Berkontribusi
+## Kontribusi
 
-Pahlawan baru, mantra, preset (React Native, KMP, SwiftUI…), dan kasus uji sangat diterima. Lihat [CONTRIBUTING.md](CONTRIBUTING.md). Kalau kru ini pernah menyelamatkan malammu dari bencana, sebuah ⭐ membantu orang lain menemukannya.
+Hero baru, spell, preset (React Native, KMP, SwiftUI, …), dan kasus test
+sangat diterima. Lihat [CONTRIBUTING.md](CONTRIBUTING.md). Kalau crew ini pernah
+menyelamatkan malammu, ⭐ membantu orang lain menemukannya.
+
+Terima kasih untuk [@jaanya0502-glitch](https://github.com/jaanya0502-glitch), yang membuat terjemahan bahasa Indonesia pertama.
 
 ## Kredit dan disclaimer
 
-Tangga kemalasan diadaptasi dari [ponytail](https://github.com/DietrichGebert/ponytail) (MIT). Karya penggemar dan tidak resmi. FINAL FANTASY beserta karakternya adalah merek dagang Square Enix, yang tidak berafiliasi dengan maupun mendukung proyek ini; nama-nama tersebut hanya dipakai sebagai label peran. Tidak ada aset game yang disertakan.
+Urutan "malas"-nya diadaptasi dari [ponytail](https://github.com/DietrichGebert/ponytail) (MIT).
+Ini karya penggemar dan tidak resmi. FINAL FANTASY dan para karakternya adalah
+merek dagang Square Enix, yang tidak berafiliasi dengan dan tidak mendukung proyek
+ini. Nama-nama itu hanya dipakai sebagai label peran. Tidak ada aset game yang disertakan.
 
 MIT © saimskywalker
