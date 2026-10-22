@@ -10,11 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
       - name: Shellcheck
-        run: shellcheck -S warning install.sh uninstall.sh tests/run.sh wol/spells/*.sh wol/crystal/*.sh
+        run: shellcheck -S warning install.sh uninstall.sh tests/run.sh bin/wol wol/lib.sh wol/spells/*.sh wol/crystal/*.sh bench/run.sh bench/tasks/*/check.sh
       - name: Generated files are up to date
         run: |
           python3 tools/gen_agents.py && python3 tools/gen_skills.py
           git diff --exit-code -- agents skills
       - name: Spell tests
         run: tests/run.sh
+      - name: Benchmark plumbing (no Claude calls)
+        run: bench/run.sh --dry

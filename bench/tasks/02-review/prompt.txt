@@ -1,0 +1,1 @@
+Review lib/purchase.dart for security and money bugs. Do not edit any file. List each problem with its line and a one-line fix.

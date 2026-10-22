@@ -1,0 +1,38 @@
+name: Benchmark result
+description: Share the table bench/run.sh printed, so everyone sees how the crew does on real machines.
+title: "Benchmark: <model> · <runs> runs · <your machine>"
+labels: ["benchmark"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for running the benchmark. Paste the whole report from `bench/results/<date>.md`.
+        Numbers from many machines and models are worth more than any one run.
+  - type: textarea
+    id: report
+    attributes:
+      label: Report
+      description: The markdown table and the lines above it, exactly as printed.
+      render: markdown
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Command you ran
+      placeholder: bench/run.sh --runs 3 --model sonnet
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How the crew was installed
+      options:
+        - bench/run.sh default (install.sh into a fresh workspace)
+        - Plugin
+        - Other (explain below)
+  - type: textarea
+    id: notes
+    attributes:
+      label: What did you notice?
+      description: A hero that helped or got in the way, a check you think is unfair, a task we should add.
