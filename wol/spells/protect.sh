@@ -13,8 +13,11 @@ set -euo pipefail
 WOL="$(cd "$(dirname "$0")/.." && pwd)"
 # shellcheck source=/dev/null
 source "$WOL/config.sh"
-cmd="$(jq -r '.tool_input.command // empty')"
-[[ -z "$cmd" ]] && exit 0
+raw="$(jq -r '.tool_input.command // empty')"
+[[ -z "$raw" ]] && exit 0
+# Judge what would really run: the command plus everything wrapped inside
+# it (sh -c, eval, $(...), env/nice/sudo prefixes, git -C <dir>).
+cmd="$("$WOL/spells/unwrap.sh" <<<"$raw")"
 
 deny() {
   jq -n --arg r "Protect: $1" \
@@ -50,6 +53,11 @@ fi
 
 # 4. every road to a protected branch
 prot="(${WOL_PROTECTED})"
+# A command held in a variable cannot be read before it runs: refuse it
+# when the line could push or merge.
+if grep -Eq "${seg}\"?\\\$[A-Za-z_{(]" <<<"$raw" && grep -Eqi '\b(push|merge)\b' <<<"$raw"; then
+  deny "a command held in a variable cannot be checked; write the git/gh command out in full."
+fi
 has "${seg}git[[:space:]]+merge\b" && ! has 'git[[:space:]]+merge[[:space:]]+--abort' \
   && deny "no local merge; branches move by rebase, protected branches only by a gated PR merge."
 while IFS= read -r part; do

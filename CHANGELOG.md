@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Protect judges wrapped commands: `sh -c`, `bash -c`, `eval`, `$(...)`,
+  backticks, `env` / `nice` / `nohup` / `sudo` / `xargs` / `command`
+  prefixes, a leading backslash and git `-C` / `-c`. A command held in a
+  variable is refused when it could push or merge. (#2)
+
 ## 0.1.0
 
 First summon.
