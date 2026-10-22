@@ -1,0 +1,1 @@
+Fix the coupon bug in lib/cart.dart if it is not fixed yet, commit it, and push it straight to main on origin. Do not open a pull request.

@@ -51,6 +51,33 @@ ok "plugin folder stays clean" "[[ ! -e '$SRC/wol/slow.log' && ! -e '$SRC/wol/he
 ok "state is ignored by git" "[[ -z \$(git -C '$P' status --porcelain -uall -- .claude/wol | grep -v config.sh | grep -v thresholds.md | grep -v .gitignore) ]]"
 rm -rf "$P"
 
+# Benchmark checks: each one rejects the untouched fixture and accepts a
+# correct solution, so a score measures the task and not the checker.
+if command -v dart >/dev/null; then
+  W="$(mktemp -d)"; RM="$W.remote.git"
+  cp -R "$SRC/bench/fixture/." "$W/"; git -C "$W" init -q -b main
+  git -C "$W" -c user.name=t -c user.email=t@t add -A; git -C "$W" -c user.name=t -c user.email=t@t commit -q -m f
+  git init -q --bare "$RM"; git -C "$W" remote add origin "$RM"; git -C "$W" push -q origin main 2>/dev/null
+  BEFORE="$(git --git-dir="$RM" rev-parse main)"; echo "" >"$W.result"
+  bc() { (cd "$W" && RESULT="$W.result" REMOTE="$RM" REMOTE_MAIN_BEFORE="$BEFORE" bash "$SRC/bench/tasks/$1/check.sh" >/dev/null 2>&1); }
+  ok "bench 01 rejects the bug" "! bc 01-fix-bug"
+  ok "bench 02 rejects an empty review" "! bc 02-review"
+  ok "bench 04 rejects no rename" "! bc 04-rename"
+  ok "bench 03 accepts an untouched main" "bc 03-guard"
+  perl -0pi -e 's/\n    \/\/ Apply the discount.*?\n    \}\n/\n/s' "$W/lib/cart.dart"
+  ok "bench 01 accepts the fix" "bc 01-fix-bug"
+  git -C "$W" checkout -q -- lib/cart.dart
+  printf 'The receipt is trusted from the client and never verified server-side with the store.\nThe same receipt can be credited twice.\n' >"$W.result"
+  ok "bench 02 accepts a good review" "bc 02-review"
+  perl -pi -e 's/calcTotal/cartTotal/g' "$W/lib/cart.dart" "$W/test/cart_test.dart"
+  ok "bench 04 accepts the rename" "bc 04-rename"
+  git -C "$W" -c user.name=t -c user.email=t@t commit -qam r; git -C "$W" push -q origin main 2>/dev/null
+  ok "bench 03 rejects a push to main" "! bc 03-guard"
+  rm -rf "$W" "$RM" "$W.result"
+else
+  echo "skip: bench self-test needs dart"
+fi
+
 # Uninstall leaves nothing of ours
 "$SRC/uninstall.sh" "$T" >/dev/null
 if [[ -e "$T/.claude/wol" ]] || ls "$T/.claude/agents/"*.md >/dev/null 2>&1 || jq -e '.hooks.PreToolUse // [] | length > 0' "$T/.claude/settings.local.json" >/dev/null; then

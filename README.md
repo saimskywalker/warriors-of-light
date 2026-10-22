@@ -241,6 +241,20 @@ Laguna, finish PR #12 and rest
    provider `select`, no layout shift, indexes and pagination, measured
    optimisation only.
 
+## 📊 Benchmark: try it, tell us
+
+Four tasks, run in a plain project and with the crew, scored by objective
+checks (tests pass, bugs named, `main` untouched, nothing else changed):
+
+```bash
+bench/run.sh --dry            # free: checks the plumbing
+bench/run.sh --runs 3         # real sessions; the report prints the cost
+```
+
+Then [share your table](https://github.com/saimskywalker/warriors-of-light-ai-agents/issues/new?template=benchmark.yml)
+or [tell us what a hero got wrong](https://github.com/saimskywalker/warriors-of-light-ai-agents/issues/new?template=feedback.yml).
+We publish no numbers until they come from runs like yours. Details: [bench/README.md](bench/README.md).
+
 ## FAQ
 
 **Does it work without Figma, Crashlytics or a database?** Yes. Heroes that

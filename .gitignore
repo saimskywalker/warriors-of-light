@@ -6,3 +6,4 @@ wol/crystal/*.pid
 wol/verdicts/
 __pycache__/
 .DS_Store
+bench/results/
