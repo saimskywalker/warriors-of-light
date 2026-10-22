@@ -4,10 +4,10 @@
 
 **English** · [Bahasa Indonesia](README.id.md)
 
-**A Claude Code crew for Flutter, mobile and web apps.**
+**AI agents for Claude Code, built for Flutter, mobile and web apps.**
 16 heroes. 14 skills. 5 spells that cost zero tokens. One gate no merge gets past.
 
-[![ci](https://github.com/saimskywalker/warriors-of-light/actions/workflows/ci.yml/badge.svg)](https://github.com/saimskywalker/warriors-of-light/actions/workflows/ci.yml)
+[![ci](https://github.com/saimskywalker/warriors-of-light-ai-agents/actions/workflows/ci.yml/badge.svg)](https://github.com/saimskywalker/warriors-of-light-ai-agents/actions/workflows/ci.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/built%20for-Claude%20Code-d97757)](https://docs.anthropic.com/en/docs/claude-code)
 
@@ -48,23 +48,56 @@ Warriors of Light answers each one with something that cannot forget:
 
 ## Summon them in 60 seconds
 
-```bash
-git clone https://github.com/saimskywalker/warriors-of-light.git
-cd warriors-of-light
-./install.sh --preset flutter ~/code/my-app      # or: web | fullstack
+**As a Claude Code plugin** (recommended), inside Claude Code:
+
+```
+/plugin install warriors-of-light --marketplace saimskywalker/warriors-of-light-ai-agents
 ```
 
-Open a **new** Claude Code session in your app and say:
+On an older Claude Code, add the marketplace first:
+`/plugin marketplace add saimskywalker/warriors-of-light-ai-agents`, then
+`/plugin install warriors-of-light@warriors-of-light`.
+
+Then, in your app's folder, write the project's settings once (pick a preset):
+
+```bash
+wol init flutter      # or: web | fullstack
+```
+
+and say:
 
 ```
 Warriors of Light, assemble!
 ```
 
+Plugin agents and skills are namespaced (`warriors-of-light:noctis`), so
+they never collide with your own. Settings and runtime state live in your
+project's `.claude/wol/`; commit `config.sh` to share it with your team.
+
+**Without plugins** (a script install into one project):
+
+```bash
+git clone https://github.com/saimskywalker/warriors-of-light-ai-agents.git
+./warriors-of-light-ai-agents/install.sh --preset flutter ~/code/my-app   # add --team to commit the crew
+```
+
 Personal by default: everything lands in `.claude/` and is hidden from git
-through `.git/info/exclude`. Add `--team` to commit the crew for everyone.
-Remove it any time with `./uninstall.sh ~/code/my-app`.
+through `.git/info/exclude`. Remove it with `./uninstall.sh ~/code/my-app`.
 
 Needs `jq`, `git`, `perl`, and `gh` for the merge gate. macOS or Linux.
+
+### The `wol` command
+
+| Command | What it does |
+|---|---|
+| `wol init <preset>` | writes `.claude/wol/config.sh` for this project |
+| `wol slow '<command>'` | runs a heavy command through the queue |
+| `wol gate <pr> --report` | shows every Crystal Gate condition for a PR |
+| `wol libra` | queue holder, heavy processes, free memory, recent runs |
+| `wol awake start` / `wol rest` | Laguna's keep-awake and end-of-run |
+
+With the plugin, `wol` is on your PATH; after `install.sh` it is
+`.claude/wol/bin/wol`.
 
 ## ⚔️ The heroes (subagents)
 
@@ -156,7 +189,7 @@ your `PATH` is out of its sight. Keep GitHub branch protection on as well.
 - a `PASS` verdict for this exact commit from each reviewer the diff needs.
 
 ```bash
-.claude/wol/crystal/gate.sh 12 --report
+wol gate 12 --report
 ✓ author is the owner
 ✓ mergeable, no conflict
 ✗ checks not green: test=IN_PROGRESS

@@ -7,11 +7,10 @@
 # runs at nice 10, stops the whole process group after WOL_TIMEOUT, and
 # logs start, end, exit code, duration and the lowest free memory.
 set -uo pipefail
-WOL="$(cd "$(dirname "$0")/.." && pwd)"
 # shellcheck source=/dev/null
-source "$WOL/config.sh"
-ROOT="$(git -C "$WOL" rev-parse --show-toplevel 2>/dev/null || pwd)"
-LOCK="$WOL/heavy.lock"; LOG="$WOL/slow.log"
+source "$(dirname "$0")/../lib.sh"
+ROOT="$PROJECT"
+wol_state; LOCK="$STATE/heavy.lock"; LOG="$STATE/slow.log"
 [[ $# -ge 1 ]] || { echo "usage: slow.sh '<command>'" >&2; exit 2; }
 cmd="$*"
 
