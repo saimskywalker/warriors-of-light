@@ -2,6 +2,8 @@
 
 # ✦ Warriors of Light ✦
 
+**English** · [Bahasa Indonesia](README.id.md)
+
 **A Claude Code crew for Flutter, mobile and web apps.**
 16 heroes. 14 skills. 5 spells that cost zero tokens. One gate no merge gets past.
 
