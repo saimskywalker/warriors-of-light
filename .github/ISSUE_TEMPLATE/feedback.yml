@@ -1,0 +1,41 @@
+name: Hero or spell feedback
+description: A hero, skill or spell that helped, got in the way, or got something wrong in your project.
+labels: ["feedback"]
+body:
+  - type: dropdown
+    id: part
+    attributes:
+      label: Which part
+      options:
+        - A hero (subagent)
+        - A skill
+        - Protect (shell guard)
+        - Shell, Silence or Mini
+        - Slow (heavy queue)
+        - Crystal Gate (merge gate)
+        - Install / plugin
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      placeholder: noctis, auron, Protect, ...
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+      description: For a blocked or allowed command, paste the exact command and the message. Leave out secrets and private code.
+    validations:
+      required: true
+  - type: input
+    id: stack
+    attributes:
+      label: Your stack
+      placeholder: Flutter 3.x + Firebase, Next.js + Supabase, ...
+  - type: input
+    id: version
+    attributes:
+      label: Claude Code version and model
+      placeholder: 2.1.x, sonnet
