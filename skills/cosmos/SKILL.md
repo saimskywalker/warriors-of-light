@@ -46,7 +46,8 @@ Reviewers return a VERDICT block, never diffs or logs.
 | UI files | rosa (skill, advisory) |
 | `WOL_GATE_HUMAN`: CI, release, infra | a human merges |
 
-`.claude/wol/crystal/gate.sh <N> --report` prints the same list for a PR.
+`wol gate <N> --report` prints the same list for a PR. (`wol` is on PATH with
+the plugin; after install.sh it is `.claude/wol/bin/wol`.)
 PASS continues, BLOCK is a fix round, NEEDS-HUMAN stops and asks.
 
 ## 2. A parallel job

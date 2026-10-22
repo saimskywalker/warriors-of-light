@@ -10,9 +10,8 @@
 #   6. reading secret files;
 #   and sends `gh pr merge <N>` through the Crystal Gate.
 set -euo pipefail
-WOL="$(cd "$(dirname "$0")/.." && pwd)"
 # shellcheck source=/dev/null
-source "$WOL/config.sh"
+source "$(dirname "$0")/../lib.sh"
 raw="$(jq -r '.tool_input.command // empty')"
 [[ -z "$raw" ]] && exit 0
 # Judge what would really run: the command plus everything wrapped inside
@@ -32,7 +31,7 @@ seg='(^|[;&|(]|then|do)[[:space:]]*(command[[:space:]]+)?'
 parts() { perl -pe 's/(&&|\|\||;|\|)/\n/g' <<<"$cmd"; }
 
 # 1. CI-only commands
-if [[ -n "${WOL_BLOCK_LOCAL:-}" ]] && has "${seg}(${WOL_BLOCK_LOCAL})" && [[ ! -e "$WOL/allow-local" ]]; then
+if [[ -n "${WOL_BLOCK_LOCAL:-}" ]] && has "${seg}(${WOL_BLOCK_LOCAL})" && [[ ! -e "$STATE/allow-local" ]]; then
   deny "this command runs in CI, not on this machine (WOL_BLOCK_LOCAL). Override: touch .claude/wol/allow-local"
 fi
 
@@ -47,8 +46,8 @@ if [[ "${WOL_FULL_SUITE_BLOCK:-1}" == 1 ]]; then
 fi
 
 # 3. heavy commands go through the queue
-if [[ -n "${WOL_HEAVY:-}" ]] && has "${seg}(${WOL_HEAVY})\b" && ! has 'spells/slow\.sh'; then
-  deny "heavy command; queue it: .claude/wol/spells/slow.sh '<command>' (one at a time, low priority, memory check, time limit, log)."
+if [[ -n "${WOL_HEAVY:-}" ]] && has "${seg}(${WOL_HEAVY})\b" && ! has 'spells/slow\.sh|(^|[;&|/[:space:]])wol[[:space:]]+slow\b'; then
+  deny "heavy command; queue it: wol slow '<command>' (after install.sh: .claude/wol/bin/wol slow '<command>'): one at a time, low priority, memory check, time limit, log."
 fi
 
 # 4. every road to a protected branch
@@ -70,7 +69,7 @@ while IFS= read -r part; do
       && deny "a production tag ships to users; the owner pushes it (skill: cid)."
   fi
 done < <(parts)
-cur="$(git -C "$WOL" rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?')"
+cur="$(git -C "$PROJECT" rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?')"
 if has "${seg}git[[:space:]]+push\b" && grep -Eqx "${prot}" <<<"$cur"; then
   deny "no push while checked out on $cur."
 fi

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Keep the machine awake during Laguna's run.   awake.sh start | stop | status
-WOL="$(cd "$(dirname "$0")/.." && pwd)"; PID="$WOL/crystal/awake.pid"
+# shellcheck source=/dev/null
+source "$(dirname "$0")/../lib.sh"; wol_state; PID="$STATE/awake.pid"
 running() { [[ -f "$PID" ]] && kill -0 "$(cat "$PID")" 2>/dev/null; }
 case "${1:-status}" in
   start)

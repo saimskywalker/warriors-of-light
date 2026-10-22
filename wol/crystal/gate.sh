@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The Crystal Gate — called by Protect for every `gh pr merge <N>`.
 # Exit 0 only when every condition holds, read live from GitHub:
-#   - Laguna was invoked for this PR today (crystal/active/<N> = today);
+#   - Laguna was invoked for this PR today (active/<N> = today);
 #   - the PR is WOL_OWNER's, targets WOL_BASE, is not a draft, carries no
 #     `needs-human` label, has no review requested from WOL_HUMAN_ONLY_REVIEWERS;
 #   - MERGEABLE (no conflict with the base) and mergeStateStatus CLEAN;
@@ -14,9 +14,8 @@
 #   gate.sh <N>            the gate
 #   gate.sh <N> --report   every line, pass or fail
 set -uo pipefail
-WOL="$(cd "$(dirname "$0")/.." && pwd)"
 # shellcheck source=/dev/null
-source "$WOL/config.sh"
+source "$(dirname "$0")/../lib.sh"
 pr="${1:?usage: gate.sh <pr> [--report]}"
 report=0; [[ "${2:-}" == "--report" ]] && report=1
 fail=0
@@ -26,7 +25,7 @@ ok() { (( report )) && echo "✓ $*"; return 0; }
 repo="$(gh repo view --json nameWithOwner --jq .nameWithOwner 2>/dev/null)" || { echo "✗ not a GitHub repo"; exit 1; }
 [[ -n "${WOL_OWNER:-}" ]] || no "WOL_OWNER is empty in .claude/wol/config.sh: the gate refuses every merge"
 
-tok="$WOL/crystal/active/$pr"
+tok="$STATE/active/$pr"
 [[ -f "$tok" && "$(cat "$tok")" == "$(date +%F)" ]] && ok "Laguna invoked for #$pr today" \
   || no "Laguna was not invoked for #$pr today; outside that run only a human merges"
 
@@ -70,7 +69,7 @@ grep -Eq -- "(${WOL_GATE_COPY})" <<<"$files" && need+=(terra)
 grep -Eq -- "(${WOL_GATE_DB})" <<<"$files" && need+=(shantotto)
 for a in "${need[@]:-}"; do
   [[ -z "$a" ]] && continue
-  v="$WOL/verdicts/$pr-$a.txt"
+  v="$STATE/verdicts/$pr-$a.txt"
   if [[ -f "$v" ]] && grep -qx "VERDICT: PASS" "$v" && grep -qx "SHA: $head" "$v"; then ok "$a PASS for ${head:0:9}"
   else no "$a verdict PASS for head ${head:0:9} missing (.claude/wol/verdicts/$pr-$a.txt)"; fi
 done

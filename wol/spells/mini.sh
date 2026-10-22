@@ -5,9 +5,8 @@
 #   grows one already over it. Growth is measured against git HEAD, so an
 #   old big file is never punished for being touched, only for growing.
 set -euo pipefail
-WOL="$(cd "$(dirname "$0")/.." && pwd)"
 # shellcheck source=/dev/null
-source "$WOL/config.sh"
+source "$(dirname "$0")/../lib.sh"
 f="$(jq -r '.tool_input.file_path // empty')"
 [[ -z "$f" || ! -f "$f" ]] && exit 0
 grep -Eq "\.(${WOL_LOC_EXT})$" <<<"$f" || exit 0
