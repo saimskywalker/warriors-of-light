@@ -279,7 +279,7 @@ Terima kasih untuk [@jaanya0502-glitch](https://github.com/jaanya0502-glitch), y
 
 ## Kredit dan disclaimer
 
-Urutan "malas"-nya diadaptasi dari [ponytail](https://github.com/DietrichGebert/ponytail) (MIT).
+Urutan "malas"-nya diadaptasi dari [ponytail](https://github.com/DietrichGebert/ponytail) (MIT); pemberitahuan lisensinya ada di [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 Ini karya penggemar dan tidak resmi. FINAL FANTASY dan para karakternya adalah
 merek dagang Square Enix, yang tidak berafiliasi dengan dan tidak mendukung proyek
 ini. Nama-nama itu hanya dipakai sebagai label peran. Tidak ada aset game yang disertakan.

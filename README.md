@@ -279,7 +279,8 @@ night, a ⭐ helps others find it.
 
 ## Credits and disclaimer
 
-The laziness ladder is adapted from [ponytail](https://github.com/DietrichGebert/ponytail) (MIT).
+The laziness ladder is adapted from [ponytail](https://github.com/DietrichGebert/ponytail) (MIT); its licence notice is in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Thanks to [@jaanya0502-glitch](https://github.com/jaanya0502-glitch) for the first Indonesian translation of this README.
 Fan-made and unofficial. FINAL FANTASY and its characters are trademarks of
 Square Enix, which is not affiliated with and does not endorse this project;
 the names are used only as role labels. No game assets are included.
